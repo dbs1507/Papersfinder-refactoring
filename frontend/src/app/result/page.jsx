@@ -2,6 +2,7 @@ import React from 'react';
 import Header from "@/components/Header";
 import ChartSearch from "@/components/ChartSearch";
 import CardArticle from "@/components/CardArticle";
+import TopCitations from "@/components/TopCitations";
 
 
 const Result = () => {
@@ -15,8 +16,10 @@ const Result = () => {
             </div>
             <h3 className="text-2xl font-syne pb-16">Interesse ao longo do tempo</h3>
             <ChartSearch/>
+            <h3 className="text-2xl font-syne pt-16 pb-4">Top 5 citações</h3>
+            <TopCitations />
             <h3 className="text-2xl font-syne pt-16 pb-4">Artigos relacionados</h3>
-            <CardArticle />
+            <CardArticle size="w-1/2" />
         </div>
       </>
   );

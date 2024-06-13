@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize:{
+        'text-9xl': '10rem'
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -14,6 +17,7 @@ module.exports = {
       },
       fontFamily: {
         'syne': ['Syne', 'sans-serif'],
+        'sans': ['Roboto', 'sans-serif'],
       },
     },
   },
