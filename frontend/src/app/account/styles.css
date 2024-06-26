@@ -1,0 +1,31 @@
+/* styles.css */
+.ball-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha os itens à esquerda */
+    margin-top: 180px; /* Espaçamento entre o título e a bola */
+    margin-left: 150px;
+    align-items: center;
+  }
+  
+  .ball {
+    width: 150px;
+    height: 150px;
+    background-color: #c0c0c0;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .ball-text {
+    color: rgb(0, 0, 0);
+    font-size: 90px;
+    font-weight: 500;
+  }
+
+  

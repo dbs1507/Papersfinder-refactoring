@@ -14,7 +14,7 @@ const data = [
 
 const ChartSearch = () => (
   <>
-    <ResponsiveContainer width="50%" height={700}>
+    <ResponsiveContainer width="77.5%" height={700}>
       <LineChart data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
