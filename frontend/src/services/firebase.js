@@ -11,16 +11,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_APPID,
   measurementId: process.env.NEXT_PUBLIC_MEASUREMENTID
 };
-// const firebaseConfig = {
-//     apiKey: "AIzaSyDqrhI8odGogD7FTJvhUWVlYGqeSlYE3pg",
-//     authDomain: "papersfinder-aed7c.firebaseapp.com",
-//     projectId: "papersfinder-aed7c",
-//     storageBucket: "papersfinder-aed7c.appspot.com",
-//     messagingSenderId: "671486215155",
-//     appId: "1:671486215155:web:5a336c414e1a8e505ec886",
-//     measurementId: "G-613HL8MP3V"
-// };
-  
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
