@@ -34,8 +34,9 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center mt-10">
-      <h1 className="text-3xl font-syne mb-10">PAPERSFINDER</h1>
-      <h1 className="mt-20 text-2xl text-gray-900 font-syne">Login</h1>
+      <div className='flex items-center justify-center'>
+        <a href='/' className="text-3xl font-syne mt-10">PAPERSFINDER</a>
+      </div>      <h1 className="mt-20 text-2xl text-gray-900 font-syne">Login</h1>
       <div className="mt-10 sm:w-full sm:max-w-sm border border-gray-300 rounded-lg p-6">
         <form className="space-y-6" onSubmit={handleLogin}>
           <div className="flex flex-col">

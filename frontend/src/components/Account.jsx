@@ -1,8 +1,25 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/navigation';
+// import './styles.css';
 
 const Account = () => {
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
+  const { currentUser, logout } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!currentUser) {
+      router.push('/login'); // Redirecionar para a página de login se o usuário não estiver autenticado
+    }
+  }, [currentUser, router]);
+
+  if (!currentUser) {
+    return <div>Carregando...</div>; // Ou qualquer componente de carregamento
+  }
+
+  const isGoogleUser = currentUser.providerId === 'google.com';
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword); // Alternar entre mostrar e esconder a senha
@@ -21,7 +38,9 @@ const Account = () => {
                   type="text"
                   id="nome"
                   style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #ccc' }}
-                  className="border border-gray-300 focus:border-gray-500 focus:outline-none"
+                  className="bg-gray-300 border border-gray-300 focus:border-gray-500 focus:outline-none"
+                  defaultValue={currentUser.displayName}
+                  disabled={isGoogleUser}
                 />
               </div>
               <div className="flex flex-col w-full">
@@ -30,7 +49,8 @@ const Account = () => {
                   type="text"
                   id="sobrenome"
                   style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #ccc' }}
-                  className="border border-gray-300 focus:border-gray-500 focus:outline-none"
+                  className="bg-gray-300 border border-gray-300 focus:border-gray-500 focus:outline-none"
+                  disabled={isGoogleUser}
                 />
               </div>
               <div className="flex flex-col w-full">
@@ -39,7 +59,9 @@ const Account = () => {
                   type="email"
                   id="email"
                   style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #ccc' }}
-                  className="border border-gray-300 focus:border-gray-500 focus:outline-none"
+                  className="border bg-gray-300 border-gray-300 focus:border-gray-500 focus:outline-none"
+                  defaultValue={currentUser.email}
+                  disabled={isGoogleUser}
                 />
               </div>
               <div className="flex flex-col w-full">
@@ -49,6 +71,7 @@ const Account = () => {
                     type="button"
                     onClick={togglePasswordVisibility}
                     className="ml-2 text-sm font-syne text-gray-500 focus:outline-none"
+                    disabled={isGoogleUser}
                   >
                     {showPassword ? (
                       <img src="/eye.svg" alt="Mostrar senha" className="w-4 h-4 mr-2" />
@@ -58,15 +81,24 @@ const Account = () => {
                   </button>
                 </label>
                 <input
-                  type={showPassword ? 'text' : 'password'} // Mostrar ou esconder a senha conforme estado de showPassword
+                  type={showPassword ? 'text' : 'password'}
                   id="senha"
                   style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #ccc' }}
-                  className="border border-gray-300 focus:border-gray-500 focus:outline-none"
+                  className="bg-gray-300 border border-gray-300 focus:border-gray-500 focus:outline-none"
+                  disabled={isGoogleUser}
                 />
               </div>
+              {isGoogleUser && (
+                <div className="text-red-600 mt-2">
+                  Login feito via Google, não é possível editar os dados.
+                </div>
+              )}
             </div>
-            <button className="itens-center mt-8 text-lg font-syne border border-gray-300 p-2 rounded-lg text-gray-700 focus:outline-none w-1/4">
-                Salvar
+            <button
+              className="items-center mt-8 text-lg font-syne border border-gray-300 p-2 rounded-lg text-gray-700 focus:outline-none w-1/4"
+              disabled={isGoogleUser}
+            >
+              Salvar
             </button>
           </div>
         </div>

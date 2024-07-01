@@ -1,53 +1,60 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css'; // Importe o arquivo de estilos CSS
 import AccountUser from '@/components/Account';
 import Favorites from '@/components/Favorites';
 import { useAuth } from '../../context/AuthContext';
-import { logout } from '../../services/auth';
 import { useRouter } from 'next/navigation'; // Importar o hook de roteamento do Next.js
 
 const Account = () => {
   const [activeButton, setActiveButton] = useState('Conta');
-  const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
+  const { currentUser, logout } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!currentUser) {
+      router.push('/login'); // Redirecionar para a página de login se o usuário não estiver autenticado
+    }
+  }, [currentUser, router]);
 
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
   };
 
-  const router = useRouter(); // Inicializar o roteador
-
   const handleLogout = async () => {
     try {
       await logout();
-      router.push('/'); // Redirecionar para a página inicial
-
-      // Redirecionar para a página de login ou página inicial após o logout
-      // Você pode usar o useRouter do Next.js ou o history do React Router para isso
+      router.push('/'); // Redirecionar para a página inicial após o logout
     } catch (error) {
       console.error('Erro ao fazer logout:', error);
-      // Tratar erro de logout, se necessário
     }
   };
 
-  const { currentUser } = useAuth();
-
-  // Verifica se currentUser está carregado e se firstName e email são strings válidas
-  const firstName = currentUser?.firstName || '';
+  // Verifica se currentUser está carregado e se displayName e email são strings válidas
+  const displayName = currentUser?.displayName || '';
   const email = currentUser?.email || '';
-  
+  const photo = currentUser?.photoURL
+
+
+  if (!currentUser) {
+    return <div>Carregando...</div>; // Ou qualquer componente de carregamento
+  }
 
   return (
     <>
       <div className='flex items-center justify-center'>
         <a href='/' className="text-3xl font-syne mt-10">PAPERSFINDER</a>
       </div>
-      {currentUser ? (
       <div className="ball-container">
         <span className="ball">
-            <span className="ball-text font-sans">{firstName[0].toUpperCase()}</span>
-          </span>
-          <p className="font-syne text-3xl mt-2">{firstName.toUpperCase()}</p>
+        {photo ? (
+              <img src={photo} alt="User Profile" className="w-40 h-40 rounded-full" />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center">
+                {displayName ? displayName[0].toUpperCase() : email[0].toUpperCase()}
+              </div>
+            )}        </span>
+        <p className="font-syne text-3xl mt-2">{displayName ? displayName.toUpperCase() : email.toUpperCase()}</p>
         <div className='mt-20 font-syne'>
           <ul className='space-y-10'>
             <li>
@@ -73,19 +80,16 @@ const Account = () => {
               </button>
             </li>
             <li>
-            <button
-              onClick={handleLogout}
-              className="itens-center mt-8 text-lg font-syne border border-red-800 p-2 rounded-lg text-gray-700 focus:outline-none w-2/4"
-            >
-              <p className='text-red-600'>Sair</p>
-            </button>
+              <button
+                onClick={handleLogout}
+                className="items-center mt-8 text-lg font-syne border border-red-800 p-2 rounded-lg text-gray-700 focus:outline-none w-2/4"
+              >
+                <p className='text-red-600'>Sair</p>
+              </button>
             </li>
           </ul>
         </div>
       </div>
-          ) : (
-            <div>Carregando...</div>
-          )}
       {activeButton === 'Conta' && <AccountUser />}
       {activeButton === 'Favoritos' && <Favorites />}
     </>

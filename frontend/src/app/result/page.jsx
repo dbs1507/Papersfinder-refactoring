@@ -10,8 +10,10 @@ const Result = () => {
       <>
         <Header />
         <div className="flex flex-col items-center justify-items-center min-h-screen pt-5">
-            <h1 className="text-3xl font-syne mb-6">PAPERSFINDER</h1>
-            <div className="pt-10 pb-16">
+          <div className='flex items-center justify-center'>
+            <a href='/' className="text-3xl font-syne mt-10">PAPERSFINDER</a>
+          </div>
+          <div className="pt-10 pb-16">
               <span className='text-xs bg-gray-900 text-white px-1 py-1 rounded-lg font-bold'>KEYWORD: JAVA</span>
             </div>
             <h3 className="text-2xl font-syne pb-16">Interesse ao longo do tempo</h3>

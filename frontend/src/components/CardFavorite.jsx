@@ -9,7 +9,7 @@ const CardFavorite = () => {
     setFavorite(!favorite); // Alternar entre mostrar e esconder a senha
   };
   return (
-    <div className="relative p-4 bg-white border border-gray-200 rounded-lg w-full">
+    <div className="relative p-4 bg-white border border-gray-200 rounded-lg w-3/4">
       <h5 className="mb-2 text-xl font-bold tracking-tight">Noteworthy technology acquisitions 2021</h5>
       <p className="font-normal text-gray-700 text-slate-500">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
 
