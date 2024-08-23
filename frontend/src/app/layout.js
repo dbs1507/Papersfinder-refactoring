@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
+import Header from "../components/Header";
 import { AuthProvider } from '../context/AuthContext';
+import { SearchProvider } from '../context/SearchContext';
 
 // import '../../fontawesome';
 
@@ -20,9 +21,11 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"></link>
       </head>
       <body>
+      <SearchProvider>
         <AuthProvider>
           {children}
         </AuthProvider>
+      </SearchProvider>
       </body>
     </html>
   );

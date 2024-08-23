@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import './styles.css'; // Importe o arquivo de estilos CSS
-import AccountUser from '@/components/Account';
-import Favorites from '@/components/Favorites';
+import AccountUser from '../../components/Account';
+import Favorites from '../../components/Favorites';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation'; // Importar o hook de roteamento do Next.js
 
@@ -47,13 +47,10 @@ const Account = () => {
       </div>
       <div className="ball-container">
         <span className="ball">
-        {photo ? (
-              <img src={photo} alt="User Profile" className="w-40 h-40 rounded-full" />
-            ) : (
-              <div className="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center">
-                {displayName ? displayName[0].toUpperCase() : email[0].toUpperCase()}
-              </div>
-            )}        </span>
+            <div className="w-8 h-8 rounded-full text-7xl text-black flex items-center justify-center">
+              {displayName ? displayName[0].toUpperCase() : email[0].toUpperCase()}
+            </div>
+        </span>
         <p className="font-syne text-3xl mt-2">{displayName ? displayName.toUpperCase() : email.toUpperCase()}</p>
         <div className='mt-20 font-syne'>
           <ul className='space-y-10'>

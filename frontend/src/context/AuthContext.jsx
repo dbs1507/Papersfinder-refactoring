@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, getAuth, signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import { app } from '../services/firebase'; // seu arquivo de configuração do Firebase
+import { app } from '../services/firebase';
 
 const AuthContext = createContext();
 
