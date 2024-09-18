@@ -79,7 +79,7 @@ const ResultPage = () => {
         <h3 className="text-2xl font-syne pt-16 pb-4">Top 5 citações</h3>
         {googleTopCited && <TopCitations data={googleTopCited} />}
         <h3 className="text-2xl font-syne pt-16 pb-4">Artigos relacionados</h3>
-        {googleData && <CardArticle data={googleData} size="w-3/4" />}
+        {googleData && <CardArticle data={googleData} query={searchData.query} size="w-3/4" />}
       </div>
       <div className='mt-10'>
         <Pagination 

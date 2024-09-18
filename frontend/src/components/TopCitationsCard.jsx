@@ -1,10 +1,14 @@
+import { usePathname } from 'next/navigation'; 
 import React, { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-const TopCitationsCard = ({ article, index, size }) => {
+const TopCitationsCard = ({ article, index, size, query }) => {
   const pathname = usePathname(); 
   const hiddenButtonUrls = ['/citation'];
   const [favorite, setFavorite] = useState(false);
+
+  const router = useRouter();
+
 
   const markFavorite = () => {
     setFavorite(!favorite);
@@ -12,6 +16,15 @@ const TopCitationsCard = ({ article, index, size }) => {
 
   // Escala de cores para os números
   const colors = ['text-black', 'text-gray-800', 'text-gray-600', 'text-gray-400', 'text-gray-200'];
+
+  const handleCitationClick = (idCitation, query, article) => {
+    if (idCitation) {
+      const encodedCitedArticles = encodeURIComponent(idCitation);
+      router.push(`/citation?citedArticles=${encodedCitedArticles}&query=${query}&article=${article}`);
+    } else {
+      alert('Nenhuma citação disponível para este artigo.');
+    }
+  };
 
   return (
     <div className="flex items-center mb-6">
@@ -52,9 +65,12 @@ const TopCitationsCard = ({ article, index, size }) => {
               </a>
             </button>
           )}
-          <button className="bg-transparent hover:bg-gray-500 text-gray-500 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent rounded">
-            Ver citações
-          </button>
+            <button
+              onClick={() => handleCitationClick(article.inline_links?.cited_by?.cites_id , query ,article.title )}
+              className="bg-transparent hover:bg-gray-500 text-gray-500 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent rounded"
+            >
+              Ver citações
+            </button>
         </div>
       </div>
     </div>

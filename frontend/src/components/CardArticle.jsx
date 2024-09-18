@@ -1,14 +1,19 @@
 'use client'
 import { usePathname } from 'next/navigation'; 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const CardArticle = ({ data, size }) => {
   const pathname = usePathname(); 
   const hiddenButtonUrls = ['/citation'];
-  const [favorite, setFavorite] = useState(false);
+  const [favorites, setFavorites] = useState({}); // Estado para armazenar favoritos de cada card
+  const router = useRouter();
 
-  const markFavorite = () => {
-    setFavorite(!favorite);
+  const markFavorite = (index) => {
+    setFavorites((prevFavorites) => ({
+      ...prevFavorites,
+      [index]: !prevFavorites[index], // Alterna o estado de favorito para o card específico
+    }));
   };
 
   // Verifique se os dados estão disponíveis e se há resultados
@@ -21,8 +26,19 @@ const CardArticle = ({ data, size }) => {
     snippet: item.snippet,
     citation: item.inline_links?.cited_by?.total || 0,
     authors: item.publication_info.summary,
-    link: item.link
+    link: item.link,
+    citedArticles: item.inline_links?.cited_by?.serpapi_scholar_link || false,
+    idCitation: item.inline_links?.cited_by?.cites_id || false
   }));
+
+  const handleCitationClick = (idCitation, query, article) => {
+    if (idCitation) {
+      const encodedCitedArticles = encodeURIComponent(idCitation);
+      router.push(`/citation?citedArticles=${encodedCitedArticles}&query=${query}&article=${article}`);
+    } else {
+      alert('Nenhuma citação disponível para este artigo.');
+    }
+  };
 
   return (
     <div className="flex flex-wrap justify-center">
@@ -37,10 +53,10 @@ const CardArticle = ({ data, size }) => {
           </p>
           <button
             type="button"
-            onClick={markFavorite}
+            onClick={() => markFavorite(index)} // Passa o índice do card
             className="ml-2 text-sm font-syne text-gray-500 focus:outline-none"
           >
-            {favorite ? (
+            {favorites[index] ? (
               <div className='absolute top-2 right-2'>
                 <img src="/bookmark_black.svg" alt="Bookmark preto" className="w-8 h-8" />
               </div>
@@ -61,7 +77,10 @@ const CardArticle = ({ data, size }) => {
               </a>
             </button>
             )}
-            <button className="bg-transparent hover:bg-gray-500 text-gray-500 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent rounded">
+            <button
+              onClick={() => handleCitationClick(item.idCitation, data.search_parameters.q,item.title )}
+              className="bg-transparent hover:bg-gray-500 text-gray-500 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent rounded"
+            >
               Ver citações
             </button>
           </div>
