@@ -5,6 +5,7 @@ export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const idcited = searchParams.get('idcited');
   const query = searchParams.get('query');
+  const start = searchParams.get('page');
 //   const start = searchParams.get('page'); // Use 'page' para calcular o início dos dados a serem retornados
 
   try {
@@ -15,7 +16,7 @@ export async function GET(req) {
             cites: idcited,
             engine: 'google_scholar',
             q: query,
-            // start: start, // `start` deve ser a posição inicial dos dados para Google Scholar
+            start: start, // `start` deve ser a posição inicial dos dados para Google Scholar
             api_key: 'ddcf43af2550a1944a2f8717cc8288bb28ca80af43fdae72beb6621cdde9c7db',
         }
       }),

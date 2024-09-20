@@ -77,7 +77,7 @@ const ResultPage = () => {
         <h3 className="text-2xl font-syne pb-16">Interesse ao longo do tempo</h3>
         <ChartSearch data={trendsData} />
         <h3 className="text-2xl font-syne pt-16 pb-4">Top 5 citações</h3>
-        {googleTopCited && <TopCitations data={googleTopCited} />}
+        {googleTopCited && <TopCitations query={searchData.query} data={googleTopCited} />}
         <h3 className="text-2xl font-syne pt-16 pb-4">Artigos relacionados</h3>
         {googleData && <CardArticle data={googleData} query={searchData.query} size="w-3/4" />}
       </div>

@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const CardArticle = ({ data, size }) => {
-  const pathname = usePathname(); 
-  const hiddenButtonUrls = ['/citation'];
+  // const pathname = usePathname(); 
+  // const hiddenButtonUrls = ['/citation'];
   const [favorites, setFavorites] = useState({}); // Estado para armazenar favoritos de cada card
   const router = useRouter();
 
@@ -70,19 +70,19 @@ const CardArticle = ({ data, size }) => {
             <span className='text-xs bg-gray-900 text-white px-1 py-1 rounded-lg font-bold'>{item.citation} citações</span>
           </div>
           <div className="mt-4">
-            {!hiddenButtonUrls.includes(pathname) && (
             <button className="bg-transparent hover:bg-gray-500 text-gray-500 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent rounded mr-2">
               <a href={item.link} target="_blank" rel="noopener noreferrer">
                 Ver artigo
               </a>
             </button>
-            )}
+            
             <button
               onClick={() => handleCitationClick(item.idCitation, data.search_parameters.q,item.title )}
               className="bg-transparent hover:bg-gray-500 text-gray-500 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent rounded"
             >
               Ver citações
             </button>
+            
           </div>
         </div>
       ))}

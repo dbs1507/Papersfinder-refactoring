@@ -1,7 +1,7 @@
 import React from 'react';
 import TopCitationsCard from './TopCitationsCard';
 
-const TopCitations = ({ data }) => {
+const TopCitations = ({ data, query }) => {
   if (!data || data.length === 0) {
     return <div>No citations available</div>; // Caso não haja dados
   }
@@ -15,6 +15,7 @@ const TopCitations = ({ data }) => {
             article={article} 
             index={index} 
             size="w-5/6" 
+            query={query}  // Passa a query para que seja possível buscar os artigos relacionados
           />
         ))}
       </ul>
