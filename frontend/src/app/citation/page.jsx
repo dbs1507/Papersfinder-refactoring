@@ -54,7 +54,7 @@ const CitationPage = () => {
         </div>
         <h3 className="text-2xl font-syne pt-16 pb-4">Citações relacionadas</h3>
 
-        {/* Exibe o estado de carregamento */}
+        {/* Mexer nessa tela de carregamento */}
         {loading && <p>Carregando citações...</p>}
 
         {/* Exibe os dados caso estejam disponíveis */}

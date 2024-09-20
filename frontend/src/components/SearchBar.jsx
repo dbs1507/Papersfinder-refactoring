@@ -15,13 +15,13 @@ const SearchBar = () => {
       setAlert("Pesquisa vazia, digite alguma palavra");
       return;
     }
-
+  
     setLoading(true); // Ativa o loading
-
+  
     try {
       const response = await fetch(`/api/combinedSearch?query=${encodeURIComponent(query)}&page=0`);
       const data = await response.json();
-
+  
       if (!data.trendsData) {
         setAlert("Não há dados de pesquisa suficientes para exibir o gráfico de interesse");
       } else {
@@ -31,11 +31,12 @@ const SearchBar = () => {
           trendsData: data.trendsData,
           query,
         });
-
+  
         // Salva a pesquisa no localStorage
         localStorage.setItem('lastSearch', JSON.stringify({ googleData: data.googleData, trendsData: data.trendsData, query }));
-
-        router.push('/result');
+  
+        // Navega para a página /result com parâmetros de consulta
+        router.push(`/result?query=${encodeURIComponent(query)}&page=0`);
       }
     } catch (error) {
       console.error('Error performing search:', error);
@@ -44,7 +45,7 @@ const SearchBar = () => {
       setLoading(false); // Desativa o loading após a conclusão da busca
     }
   };
-
+  
   return (
     <div className="max-w-lg mx-auto flex flex-col items-center pt-5">
       <label htmlFor="voice-search" className="sr-only">Buscar</label>

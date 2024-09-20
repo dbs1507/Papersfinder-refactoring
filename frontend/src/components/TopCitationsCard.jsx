@@ -28,7 +28,7 @@ const TopCitationsCard = ({ article, index, size, query }) => {
 
   return (
     <div className="flex items-center mb-6">
-      <li className={`pl-10 text-9xl font-sans font-bold ${colors[index]} py-2 px-10`}>
+      <li style={{fontSize: "180px"}} className={`pl-10 font-sans font-bold ${colors[index]} py-2 px-10`}>
         {index + 1}
       </li>
       <div className={`${size} p-12 bg-white border border-gray-200 rounded-lg relative`}>

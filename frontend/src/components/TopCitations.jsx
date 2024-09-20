@@ -7,7 +7,7 @@ const TopCitations = ({ data, query }) => {
   }
 
   return (
-    <div className="p-4 w-2/1 bg-white border border-gray-200 rounded-lg shadow mb-6 ml-14">
+    <div className="p-4 w-5/6 bg-white border border-gray-200 rounded-lg shadow mb-6 ml-14">
       <ul>
         {data.map((article, index) => (
           <TopCitationsCard 
