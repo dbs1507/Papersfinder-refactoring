@@ -83,9 +83,12 @@ const ResultPage = () => {
         <div className='flex items-center justify-center'>
           <a href='/' className="text-3xl font-syne mt-10">PAPERSFINDER</a>
         </div>
-        <div className="pt-10 pb-16">
-          <span className='text-xs bg-gray-900 text-white px-1 py-1 rounded-lg font-bold'>
-            KEYWORD: {queryFromUrl}
+        <div className="pt-10 pb-16 space-x-2">
+          <span className='text-xs bg-gray-900 text-white px-2 py-1 rounded-lg font-bold'>
+            PALAVRA-CHAVE: {queryFromUrl}
+          </span>
+          <span className='text-xs bg-gray-900 text-white px-2 pr-2 py-1 rounded-lg font-bold'>
+            TOTAL DE ARTIGOS: {googleData.search_information.total_results}
           </span>
         </div>
         <h3 className="text-2xl font-syne pb-16">Interesse ao longo do tempo</h3>

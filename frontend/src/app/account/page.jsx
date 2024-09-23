@@ -1,10 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import './styles.css'; // Importe o arquivo de estilos CSS
-import AccountUser from '../../components/Account';
+import AccountUser from '../../components/AccountDataInputs';
 import Favorites from '../../components/Favorites';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation'; // Importar o hook de roteamento do Next.js
+
 
 const Account = () => {
   const [activeButton, setActiveButton] = useState('Conta');

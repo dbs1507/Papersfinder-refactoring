@@ -2,20 +2,39 @@
 import { usePathname } from 'next/navigation'; 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { addFavorite,removeFavorite } from '../services/favorites';
+import { auth } from '../services/firebase'; // Importa o auth para obter o usuário logado
 
 const CardArticle = ({ data, size }) => {
-  // const pathname = usePathname(); 
-  // const hiddenButtonUrls = ['/citation'];
   const [favorites, setFavorites] = useState({}); // Estado para armazenar favoritos de cada card
   const router = useRouter();
 
-  const markFavorite = (index) => {
+  // Função para marcar o artigo como favorito
+  const markFavorite = async (index, article) => {
     setFavorites((prevFavorites) => ({
       ...prevFavorites,
       [index]: !prevFavorites[index], // Alterna o estado de favorito para o card específico
     }));
+  
+    const user = auth.currentUser; // Obtém o usuário logado
+    if (user) {
+      const userId = user.uid;
+  
+      // Verifica se o artigo já está nos favoritos e, dependendo disso, adiciona ou remove
+      if (!favorites[index]) {
+        // Adiciona o favorito se não estiver marcado
+        await addFavorite(userId, article);
+        console.log("Artigo adicionado aos favoritos!");
+      } else {
+        // Remove o favorito se já estiver marcado
+        await removeFavorite(article);
+        console.log("Artigo removido dos favoritos!");
+      }
+    } else {
+      console.error('Usuário não está logado.');
+    }
   };
-
+  
   // Verifique se os dados estão disponíveis e se há resultados
   if (!data || !data.organic_results || data.organic_results.length === 0) {
     return <span className='text-xs bg-red-500 text-white px-1 py-1 rounded-lg font-bold'>Nenhum artigo encontrado para a palavra-chave</span>; // Mensagem de erro
@@ -28,7 +47,8 @@ const CardArticle = ({ data, size }) => {
     authors: item.publication_info.summary,
     link: item.link,
     citedArticles: item.inline_links?.cited_by?.serpapi_scholar_link || false,
-    idCitation: item.inline_links?.cited_by?.cites_id || false
+    idCitation: item.inline_links?.cited_by?.cites_id || false,
+    idResult: item.result_id,
   }));
 
   const handleCitationClick = (idCitation, query, article) => {
@@ -53,7 +73,7 @@ const CardArticle = ({ data, size }) => {
           </p>
           <button
             type="button"
-            onClick={() => markFavorite(index)} // Passa o índice do card
+            onClick={() => markFavorite(index, item)} // Passa o índice e o artigo correspondente
             className="ml-2 text-sm font-syne text-gray-500 focus:outline-none"
           >
             {favorites[index] ? (
