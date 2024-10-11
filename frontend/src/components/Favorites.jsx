@@ -14,6 +14,8 @@ const Favorites = () => {
     fetchFavorites();
   }, []);
 
+  console.log(favorites);
+
   return (
     <div className="mt-24">
       <div className="w-full flex flex-col items-center">
@@ -21,7 +23,7 @@ const Favorites = () => {
           <h1 className="text-2xl font-syne mb-20">Todos os seus favoritos</h1>
           {favorites.length > 0 ? (
             favorites.map((favorite, index) => (
-              <CardFavorite key={index} favorite={favorite} />
+              <CardFavorite key={index} favorite={favorite} citations={favorite.inline_links?.cited_by?.total} />
             ))
           ) : (
             <div className="text-center">Nenhum artigo favorito encontrado.</div>

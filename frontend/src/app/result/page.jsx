@@ -7,6 +7,7 @@ import TopCitations from '../../components/TopCitations';
 import CardArticle from '../../components/CardArticle';
 import ChartSearch from '../../components/ChartSearch';
 import Pagination from '../../components/Pagination';
+import LoadingPageResult from '../../components/LoadingPageResult'
 
 const ResultPage = () => {
   const { searchData, setSearchData } = useSearch();
@@ -73,7 +74,7 @@ const ResultPage = () => {
 
   //mexer na tela de carregamento!!
   if (!googleData || !trendsData) {
-    return <div>Loading...</div>;
+    return <LoadingPageResult />
   }
 
   return (
