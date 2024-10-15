@@ -5,6 +5,7 @@ import AccountUser from '../../components/AccountDataInputs';
 import Favorites from '../../components/Favorites';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation'; // Importar o hook de roteamento do Next.js
+import LoadingPageResult from '../../components/LoadingPageResult'; // Importe o componente de carregamento
 
 
 const Account = () => {
@@ -38,7 +39,7 @@ const Account = () => {
 
 
   if (!currentUser) {
-    return <div>Carregando...</div>; // Ou qualquer componente de carregamento
+    return <LoadingPageResult /> // Ou qualquer componente de carregamento
   }
 
   return (

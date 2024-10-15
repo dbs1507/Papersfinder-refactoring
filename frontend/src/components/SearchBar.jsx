@@ -46,6 +46,13 @@ const SearchBar = () => {
     }
   };
   
+  // Adiciona o manipulador para detectar a tecla Enter
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="max-w-lg mx-auto flex flex-col items-center pt-5">
       <label htmlFor="voice-search" className="sr-only">Buscar</label>
@@ -58,6 +65,7 @@ const SearchBar = () => {
         required
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={handleKeyDown} // Adiciona o evento onKeyDown
         disabled={loading} // Desativa o input enquanto está carregando
       />
       <div className='pt-5'>
