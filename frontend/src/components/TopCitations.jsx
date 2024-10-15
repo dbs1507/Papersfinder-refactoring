@@ -41,8 +41,21 @@ const TopCitations = ({ data, query }) => {
 
   const markFavorite = async (index, article) => {
     if (!user) {
+      
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [index]: 'Usuário não está logado!',
+      }));
       console.error('Usuário não está logado.');
-      return;
+
+      setTimeout(() => {
+        setMessages((prevMessages) => ({
+          ...prevMessages,
+          [index]: '', // Limpa a mensagem após 3 segundos
+        }));
+      }, 3000);
+      return '';
+      
     }
 
     setFavorites((prevFavorites) => ({
