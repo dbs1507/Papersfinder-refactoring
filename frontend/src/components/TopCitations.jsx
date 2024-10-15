@@ -1,4 +1,3 @@
-import TopCitationsCard from './TopCitationsCard';
 import { usePathname, useSearchParams } from 'next/navigation'; 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
