@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Importar o hook de roteamento do Next.js
 import { registerWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
@@ -8,15 +8,42 @@ const Register = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter(); // Inicializar o roteador
+
+  const validatePassword = (password) => {
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*]/.test(password);
+    const hasNumber = /\d/.test(password);
+    return hasUpperCase && hasSpecialChar && hasNumber;
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError(''); // Resetar mensagem de erro
+
+    // Verificação de campos vazios
+    if (!firstName || !lastName || !email || !password) {
+      setError('Por favor, preencha todos os campos.');
+      return;
+    }
+
+    // Validação da senha
+    if (!validatePassword(password)) {
+      setError('A senha deve conter pelo menos uma letra maiúscula, um número e um caractere especial.');
+      return;
+    }
+
     try {
       await registerWithEmailAndPassword(firstName, lastName, email, password);
       router.push('/login'); // Redirecionar para a página de login após o registro
     } catch (error) {
-      console.error('Erro ao registrar:', error);
+      if (error.code === 'auth/email-already-in-use') {
+        setError('Esse e-mail já está em uso. Por favor, use outro.');
+      } else {
+        console.error('Erro ao registrar:', error);
+        setError('Ocorreu um erro ao registrar. Tente novamente.');
+      }
     }
   };
 
@@ -26,6 +53,7 @@ const Register = () => {
       router.push('/'); // Redirecionar para a página inicial após o registro com Google
     } catch (error) {
       console.error('Erro ao registrar com Google:', error);
+      setError('Ocorreu um erro ao registrar com o Google. Tente novamente.');
     }
   };
 
@@ -89,6 +117,11 @@ const Register = () => {
               />
             </div>
           </div>
+          {error && (
+            <div className="text-red-600 text-sm text-center mt-2">
+              {error}
+            </div>
+          )}
           <div>
             <button
               type="submit"
