@@ -35,12 +35,15 @@ const Account = () => {
   // Verifica se currentUser está carregado e se displayName e email são strings válidas
   const displayName = currentUser?.displayName || '';
   const email = currentUser?.email || '';
+  const name = currentUser?.firstName || '';
   const photo = currentUser?.photoURL
 
 
   if (!currentUser) {
     return <LoadingPageResult /> // Ou qualquer componente de carregamento
   }
+
+  console.log(currentUser)
 
   return (
     <>
@@ -50,10 +53,10 @@ const Account = () => {
       <div className="ball-container">
         <span className="ball">
             <div className="w-8 h-8 rounded-full text-7xl text-black flex items-center justify-center">
-              {displayName ? displayName[0].toUpperCase() : email[0].toUpperCase()}
+              {currentUser?.providerId === 'google.com' ? currentUser.displayName[0] : name[0].toUpperCase()}
             </div>
         </span>
-        <p className="font-syne text-3xl mt-2">{displayName ? displayName.toUpperCase() : email.toUpperCase()}</p>
+        <p className="font-syne text-3xl mt-2">{displayName ? displayName.toUpperCase() : name.toUpperCase()}</p>
         <div className='mt-20 font-syne'>
           <ul className='space-y-10'>
             <li>

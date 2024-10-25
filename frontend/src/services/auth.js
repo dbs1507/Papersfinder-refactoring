@@ -22,6 +22,21 @@ export const registerWithEmailAndPassword = async (firstName, lastName, email, p
   }
 };
 
+export const updateUserDetails = async (uid, userData) => {
+  try {
+    // Referência ao documento do usuário no Firestore
+    const userDoc = doc(db, 'users', uid);
+
+    // Atualiza os campos especificados no Firestore
+    await updateDoc(userDoc, userData);
+    console.log("Dados do usuário atualizados com sucesso!");
+
+  } catch (error) {
+    console.error("Erro ao atualizar os dados do usuário:", error);
+    throw error;
+  }
+};
+
 export const loginWithEmailAndPassword = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
