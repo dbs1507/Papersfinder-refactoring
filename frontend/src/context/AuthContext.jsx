@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, getAuth, signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { app } from '../services/firebase';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, onSnapshot } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
@@ -23,25 +23,29 @@ export function AuthProvider({ children }) {
       if (user) {
         const { displayName, email, photoURL, providerData, uid } = user;
         const providerId = providerData[0].providerId;
-
         let userData = { displayName, email, photoURL, providerId, uid };
 
-        // Se o usuário não for do Google, busca `firstName` e `lastName` no Firestore
+        // Observa o documento do usuário no Firestore e atualiza `currentUser` automaticamente
         if (providerId !== 'google.com') {
-          const userDoc = await getDoc(doc(db, 'users', uid)); // Supondo que a coleção se chama 'users'
-          if (userDoc.exists()) {
-            const userDocData = userDoc.data();
-            userData = {
-              ...userData,
-              firstName: userDocData.firstName,
-              lastName: userDocData.lastName,
-            };
-          }
-        }
+          const userDocRef = doc(db, 'users', uid);
+          const unsubscribeSnapshot = onSnapshot(userDocRef, (docSnap) => {
+            if (docSnap.exists()) {
+              const userDocData = docSnap.data();
+              userData = {
+                ...userData,
+                firstName: userDocData.firstName,
+                lastName: userDocData.lastName,
+              };
+              localStorage.setItem('currentUser', JSON.stringify(userData));
+              setCurrentUser(userData);
+            }
+          });
 
-        // Salva os dados do usuário no localStorage
-        localStorage.setItem('currentUser', JSON.stringify(userData));
-        setCurrentUser(userData);
+          return () => unsubscribeSnapshot();
+        } else {
+          localStorage.setItem('currentUser', JSON.stringify(userData));
+          setCurrentUser(userData);
+        }
       } else {
         localStorage.removeItem('currentUser');
         setCurrentUser(null);
@@ -63,11 +67,12 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
-    logout: () => signOut(auth).then(() => {
-      localStorage.removeItem('currentUser');
-      setCurrentUser(null);
-      router.push('/');
-    }),
+    logout: () =>
+      signOut(auth).then(() => {
+        localStorage.removeItem('currentUser');
+        setCurrentUser(null);
+        router.push('/');
+      }),
   };
 
   return (

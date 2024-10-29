@@ -1,6 +1,6 @@
 import { auth, googleProvider, db } from './firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, updateEmail } from 'firebase/auth';
+import { doc, setDoc, getDoc,updateDoc } from 'firebase/firestore';
 
 export const registerWithEmailAndPassword = async (firstName, lastName, email, password) => {
   try {
@@ -18,6 +18,16 @@ export const registerWithEmailAndPassword = async (firstName, lastName, email, p
     return user;
   } catch (error) {
     console.error(error);
+    throw error;
+  }
+};
+
+export const firebaseUpdateEmail = async (user, newEmail) => {
+  try {
+    await updateEmail(user, newEmail);
+    console.log("Email do usuário atualizado com sucesso!");
+  } catch (error) {
+    console.error("Erro ao atualizar o email do usuário:", error);
     throw error;
   }
 };

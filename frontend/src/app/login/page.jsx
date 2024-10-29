@@ -2,36 +2,36 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { loginWithEmailAndPassword, signInWithGoogle } from '../../services/auth';
+import eyeIcon from '../../../public/eye.svg';
+import eyeHideIcon from '../../../public/eye-hide.svg';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Novo estado para alternar a visibilidade da senha
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(''); // Estado para armazenar a mensagem de erro
+  const [error, setError] = useState('');
   const router = useRouter();
 
   useEffect(() => {
-    // Limpa a mensagem de erro quando o componente é desmontado ou quando o erro muda
     if (error) {
       const timer = setTimeout(() => {
         setError('');
-      }, 3000); // Tempo para mostrar a mensagem (3000 ms = 3 segundos)
-
-      // Limpa o timeout se o componente for desmontado antes do tempo
+      }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [error]); // Executa quando 'error' muda
+  }, [error]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(''); // Limpa o erro ao tentar login novamente
+    setError('');
     try {
       await loginWithEmailAndPassword(email, password);
       router.push('/');
     } catch (error) {
       console.error(error);
-      setError('Erro ao fazer login. Verifique suas credenciais e tente novamente.'); // Define a mensagem de erro
+      setError('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
     } finally {
       setLoading(false);
     }
@@ -78,16 +78,23 @@ const Login = () => {
             </label>
             <div className="relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"} // Alterna o tipo entre 'text' e 'password'
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #ccc' }}
                 className="border border-gray-300 focus:border-gray-500 focus:outline-none pr-10"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-2 top-2 text-gray-600"
+              >
+                {showPassword ? <img src='/eye.svg' className="w-4 mt-2 h-4" /> :<img className="w-4 mt-2 h-4"  src='/eye-hide.svg' />}
+              </button>
             </div>
             <div className="mt-2 text-sm text-gray-400 font-syne">
-              <a href="#" className="hover:text-gray-500">Esqueceu a senha?</a>
+              <a target="_blank" href="/forgetPassword" className="hover:text-gray-500">Esqueceu a senha?</a>
             </div>
           </div>
           <div className='pt-5 '>
@@ -112,7 +119,7 @@ const Login = () => {
           <a href="/register" className="text-gray-600">Ainda não tem conta? Cadastre-se</a>
         </p>
       </div>
-      {error && ( // Exibe a mensagem de erro se houver
+      {error && (
         <div className="absolute top-16 right-16 bg-red-500 text-white p-2 rounded-md">
           {error}
         </div>
