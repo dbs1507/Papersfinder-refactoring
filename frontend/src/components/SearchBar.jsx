@@ -81,7 +81,7 @@ const SearchBar = () => {
       <div className="relative group pt-32">
         <span className="text-gray-500 cursor-pointer text-sm">Como funciona ?</span>
         <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-10 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 bg-gray-900 text-white text-sm rounded-lg shadow-lg p-2 w-64 z-10">
-          Digite uma palavra-chave relacionada ao tema de interesse, clique em "Buscar" e obtenha estatísticas com base no Google Trends, além de sugestões de artigos vindas diretamente do Google Scholar para aprofundar seus conhecimentos sobre o assunto pesquisado.
+          <p>Digite uma palavra-chave relacionada ao tema de interesse, clique em Buscar e obtenha estatísticas com base no Google Trends, além de sugestões de artigos vindas diretamente do Google Scholar para aprofundar seus conhecimentos sobre o assunto pesquisado.</p>
         </div>
       </div>
       {alert && (
