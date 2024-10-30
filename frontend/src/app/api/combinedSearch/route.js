@@ -13,15 +13,14 @@ export async function GET(req) {
           engine: 'google_scholar',
           q: query,
           start: start, // `start` deve ser a posição inicial dos dados para Google Scholar
-          api_key: 'ddcf43af2550a1944a2f8717cc8288bb28ca80af43fdae72beb6621cdde9c7db',
-        }
+          api_key: process.env.API_KEY,        }
       }),
       axios.get(`https://serpapi.com/search.json`, {
         params: {
           engine: 'google_trends',
           q: query,
           data_type: 'TIMESERIES',
-          api_key: 'ddcf43af2550a1944a2f8717cc8288bb28ca80af43fdae72beb6621cdde9c7db',
+          api_key: process.env.API_KEY,
           date: 'today 12-m'
         }
       })

@@ -5,7 +5,7 @@ export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const palavraChave = searchParams.get('palavraChave');
   const pagina = searchParams.get('pagina') || 1;
-  const apiKey = 'ddcf43af2550a1944a2f8717cc8288bb28ca80af43fdae72beb6621cdde9c7db';
+  const apiKey = process.env.API_KEY;
   const baseURL = 'https://serpapi.com/search.json';
 
   const params = {

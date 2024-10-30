@@ -15,8 +15,7 @@ export async function GET(req) {
           engine: 'google_scholar',
           q: query,
           start: start, // Passa o índice calculado
-          api_key: process.env.SERPAPI_KEY, // Sempre guarde sua API key em variáveis de ambiente
-        }
+          api_key: process.env.API_KEY,        }
       });
   
       const googleCitationData = googleCitation.data;

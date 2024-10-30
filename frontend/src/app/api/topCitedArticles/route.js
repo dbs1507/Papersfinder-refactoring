@@ -11,7 +11,7 @@ export async function GET(req) {
 
   const totalPages = 10; // Número de páginas a serem verificadas
   const baseURL = 'https://serpapi.com/search.json';
-  const apiKey = 'ddcf43af2550a1944a2f8717cc8288bb28ca80af43fdae72beb6621cdde9c7db';
+  const apiKey = process.env.API_KEY;
   
   try {
     let allArticles = [];
