@@ -48,7 +48,7 @@ const Account = () => {
   
         // Configurações para o link de verificação de e-mail
         const actionCodeSettings = {
-          url: "http://localhost:3000/login", // URL de redirecionamento após verificação
+          url: "https://papersfinder.com.br/login", // URL de redirecionamento após verificação
           handleCodeInApp: true,
         };
   
@@ -74,7 +74,7 @@ const Account = () => {
     try {
       const auth = getAuth();
       const actionCodeSettings = {
-        url: 'https://papersfinder-refactoring.onrender.com/login',
+        url: 'https://papersfinder.com.br/login',
         handleCodeInApp: true,
       };
       await sendPasswordResetEmail(auth, currentUser.email, actionCodeSettings);

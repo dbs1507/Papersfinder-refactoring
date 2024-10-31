@@ -13,7 +13,7 @@ const ForgetPassword = () => {
     try {
       const auth = getAuth();
       const actionCodeSettings = {
-        url: 'https://papersfinder-refactoring.onrender.com/login', // URL para redirecionamento após redefinição
+        url: 'https://papersfinder.com.br/login', // URL para redirecionamento após redefinição
         handleCodeInApp: true,
       };
       await sendPasswordResetEmail(auth, email, actionCodeSettings);
