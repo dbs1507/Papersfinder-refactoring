@@ -95,7 +95,8 @@ const CardArticle = ({ data, size }) => {
     return <span className='text-xs bg-red-500 text-white px-1 py-1 rounded-lg font-bold'>Nenhum artigo encontrado para a palavra-chave</span>; // Mensagem de erro
   }
 
-  const dataGoogle = data.organic_results.map((item) => ({
+  const dataGoogle = data.organic_results
+  .map((item) => ({
     title: item.title,
     snippet: item.snippet,
     citation: item.inline_links?.cited_by?.total || 0,
@@ -104,7 +105,9 @@ const CardArticle = ({ data, size }) => {
     citedArticles: item.inline_links?.cited_by?.serpapi_scholar_link || false,
     idCitation: item.inline_links?.cited_by?.cites_id || false,
     idResult: item.result_id, // Usado para identificar o artigo
-  }));
+  }))
+  .sort((a, b) => b.citation - a.citation); // Ordena do menor para o maior número de citações
+
 
   const handleCitationClick = (idCitation, query, article) => {
     if (idCitation) {
