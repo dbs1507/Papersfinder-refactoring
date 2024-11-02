@@ -16,7 +16,6 @@ const ResultPage = () => {
   const [trendsData, setTrendsData] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   
-  // Para lidar com a navegação e parâmetros de URL
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -72,7 +71,6 @@ const ResultPage = () => {
     router.push(`/result?query=${encodeURIComponent(queryFromUrl)}&page=${page}`);
   };
 
-  //mexer na tela de carregamento!!
   if (!googleData || !trendsData) {
     return <LoadingPageResult />
   }
